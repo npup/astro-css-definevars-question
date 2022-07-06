@@ -1,0 +1,74 @@
+---
+import Outer from "./components/Outer.astro";
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Astro</title>
+	</head>
+	<body>
+        <div class="example-wrap">
+            Using "scoped" CSS
+            <Outer />
+        </div>
+        <div class="discussion">
+            <p>
+                The CSS custom property <code>--myColor</code> is defined in the scope of the <code>&lt;Outer></code> components' class name, which Astro generates, like:
+            </p>
+            <pre>
+.astro-OUTERHASH123 &#123;
+    --myColor: red;
+&#125;</pre>
+            <p>
+                Due to the nature of CSS, it can also be used in child components, as illustrated above.
+                I would like to call this <i>leakage</i>, since the idea is that the CSS would be "scoped".
+            </p>
+            <p>
+                I think it would be a good idea to scope the name of the custom property too?  Something like:
+            </p>
+            <pre>
+.astro-OUTERHASH123 &#123;
+    --myColor_astro-OUTERHASH123: red;
+&#125;</pre>
+            <p>
+                The scoping suffix should handled by Astro, of course.
+                Usage within the style tag should look like just using the variable, but the source would read:
+            </p>
+            <pre>
+p.astro-OUTERHASH123 &#123;
+    color: var(--myColor_astro-OUTERHASH123);
+&#125;</pre>
+            <p>
+                It would still be possible to define the property as a global if one wants it to be available outside of the component.  Granted, it would be really global in that case, not confined to the component and its children.
+            </p>
+            <p>
+                Possibly, the current (leaking) behaviour can also be kept via some option, but IMO it somewhat breaks the promise of the css being "scoped" and can be disposed of instead adding complexity for it.
+            </p>
+        </div>
+
+	</body>
+</html>
+
+
+
+<style is:global>
+    .example-wrap {
+        width: 50%;
+        margin: 40px auto;
+    }
+    .example-wrap div {
+        margin:  1em 0 0 1em;
+        outline: 1px dashed black;
+        padding: 10px;
+    }
+    .discussion {
+        width: 70%;
+        margin: 20px auto;
+        line-height: 1.4;
+    }
+    pre {
+        background-color: #eee;
+        padding: .5em;
+    }
+</style>

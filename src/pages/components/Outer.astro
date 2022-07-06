@@ -1,0 +1,15 @@
+---
+import Inner from "./Inner.astro";
+---
+
+<div>
+    <p>Outer component</p>
+    has a CSS property <code>--myColor</code> :-)
+    <Inner />
+</div>
+
+<style define:vars={{ myColor: "royalblue"}}>
+    p {
+        color: var(--myColor);
+    }
+</style>

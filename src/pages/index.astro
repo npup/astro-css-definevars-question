@@ -1,5 +1,5 @@
 ---
-import Outer from "./components/Outer.astro";
+import Outer from "../components/Outer.astro";
 ---
 <html lang="en">
 	<head>
@@ -43,7 +43,7 @@ p.astro-OUTERHASH123 &#123;
                 It would still be possible to define the property as a global if one wants it to be available outside of the component.  Granted, it would be really global in that case, not confined to the component and its children.
             </p>
             <p>
-                Possibly, the current (leaking) behaviour can also be kept via some option, but IMO it somewhat breaks the promise of the css being "scoped" and can be disposed of instead adding complexity for it.
+                Possibly, the current (leaking) behaviour can also be kept via some option, but IMO it somewhat breaks the promise of the css being "scoped" and is better disposed of rather than adding complexity for it.
             </p>
         </div>
 
